@@ -347,3 +347,108 @@ footer a {
     grid-template-columns: 1fr;
   }
 }
+
+/* ===== SOUP KITCHEN STYLES ===== */
+.soup-btn {
+  background: linear-gradient(135deg, #ff6b35, #f7931e) !important;
+  color: white !important;
+  font-weight: bold;
+}
+
+.soup-btn:hover {
+  background: linear-gradient(135deg, #ff8555, #ffa73e) !important;
+}
+
+.soup-header {
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(247,147,30,0.1));
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  grid-column: 1 / -1;
+}
+
+.soup-header h2 {
+  font-size: 2rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.soup-tagline {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 0 0 1rem 0;
+  font-style: italic;
+}
+
+.soup-stats {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.soup-link {
+  background: #ff6b35;
+  color: white !important;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.soup-link:hover { background: #ff8555; }
+
+.soup-contract { font-size: 0.85rem; color: #888; }
+.soup-contract code { background: #eee; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+.soup-description { max-width: 600px; margin: 0 auto; color: #555; }
+.section-title { grid-column: 1 / -1; margin: 1rem 0 0.5rem 0; padding-bottom: 0.5rem; border-bottom: 2px solid #ff6b35; }
+
+.soup-founders {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  grid-column: 1 / -1;
+  margin-bottom: 2rem;
+}
+
+.founder-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-left: 4px solid #ff6b35;
+}
+
+.founder-emoji { font-size: 2rem; }
+.founder-info { display: flex; flex-direction: column; }
+.founder-name { font-weight: bold; color: #333; }
+.founder-role { font-size: 0.85rem; color: #666; }
+.supporters-list { grid-column: 1 / -1; }
+
+.supporter-cta {
+  text-align: center;
+  padding: 2rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 2px dashed #ff6b35;
+}
+
+.cta-button {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  color: white !important;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin: 1rem 0;
+}
+
+.cta-button:hover { background: linear-gradient(135deg, #ff8555, #ffa73e); transform: translateY(-2px); }
+.cta-note { font-size: 0.85rem; color: #888; margin-top: 0.5rem; }
