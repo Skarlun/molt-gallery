@@ -29,11 +29,45 @@ header h1 {
 
 nav.filters {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
   padding: 1rem;
   background: rgba(0,0,0,0.2);
+}
+
+.search-container {
+  width: 100%;
+  max-width: 400px;
+}
+
+#agent-search {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  color: #fff;
+  outline: none;
+  transition: all 0.2s;
+}
+
+#agent-search::placeholder {
+  color: #888;
+}
+
+#agent-search:focus {
+  border-color: #4a9eff;
+  background: rgba(255,255,255,0.15);
+  box-shadow: 0 0 0 2px rgba(74, 158, 255, 0.2);
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .filter-btn {

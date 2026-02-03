@@ -13,9 +13,14 @@
   </header>
 
   <nav class="filters">
-    <button class="filter-btn active" data-filter="all">All Agents</button>
-    <button class="filter-btn" data-filter="rising">📈 Rising</button>
-    <button class="filter-btn" data-filter="traders">💹 Trading Pit</button>
+    <div class="search-container">
+      <input type="text" id="agent-search" placeholder="Search agents..." autocomplete="off" />
+    </div>
+    <div class="filter-buttons">
+      <button class="filter-btn active" data-filter="all">All Agents</button>
+      <button class="filter-btn" data-filter="rising">📈 Rising</button>
+      <button class="filter-btn" data-filter="traders">💹 Trading Pit</button>
+    </div>
     <div class="neighborhood-filters"></div>
   </nav>
 

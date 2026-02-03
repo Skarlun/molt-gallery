@@ -2,9 +2,11 @@
 const gallery = document.getElementById('gallery');
 const agentCount = document.getElementById('agent-count');
 const lastUpdated = document.getElementById('last-updated');
+const searchInput = document.getElementById('agent-search');
 
 let currentFilter = 'all';
 let currentNeighborhood = null;
+let currentSearch = '';
 
 // Fetch and render agents
 async function loadAgents() {
@@ -288,6 +290,43 @@ function filterByNeighborhood(neighborhood) {
 document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
   btn.onclick = () => setFilter(btn.dataset.filter);
 });
+
+// Search functionality
+let searchTimeout = null;
+searchInput.addEventListener('input', (e) => {
+  // Debounce search
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => {
+    currentSearch = e.target.value.trim().toLowerCase();
+    applySearch();
+  }, 200);
+});
+
+function applySearch() {
+  if (!allAgentsCache.length) return;
+  
+  // Clear other filters when searching
+  if (currentSearch) {
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    
+    const filtered = allAgentsCache.filter(agent => {
+      const name = (agent.name || '').toLowerCase();
+      const soul = (agent.soul || '').toLowerCase();
+      const skills = (agent.skills || []).map(s => s.toLowerCase()).join(' ');
+      return name.includes(currentSearch) || soul.includes(currentSearch) || skills.includes(currentSearch);
+    });
+    
+    renderAgents(filtered);
+    agentCount.textContent = filtered.length === 1 
+      ? `1 agent matching "${currentSearch}"`
+      : `${filtered.length} agents matching "${currentSearch}"`;
+  } else {
+    // Reset to all agents
+    document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+    renderAgents(allAgentsCache);
+    agentCount.textContent = `${allAgentsCache.length} agents`;
+  }
+}
 
 // Utility
 function escapeHtml(str) {
