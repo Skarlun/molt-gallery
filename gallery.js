@@ -3,10 +3,46 @@ const gallery = document.getElementById('gallery');
 const agentCount = document.getElementById('agent-count');
 const lastUpdated = document.getElementById('last-updated');
 const searchInput = document.getElementById('agent-search');
+const themeToggle = document.getElementById('theme-toggle');
 
 let currentFilter = 'all';
 let currentNeighborhood = null;
 let currentSearch = '';
+
+// Theme Management
+function getPreferredTheme() {
+  const stored = localStorage.getItem('molt-gallery-theme');
+  if (stored) return stored;
+  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+}
+
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('molt-gallery-theme', theme);
+  updateThemeIcon(theme);
+}
+
+function updateThemeIcon(theme) {
+  const icon = themeToggle.querySelector('.theme-icon');
+  icon.textContent = theme === 'light' ? '☀️' : '🌙';
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') || 'dark';
+  const next = current === 'dark' ? 'light' : 'dark';
+  setTheme(next);
+}
+
+// Initialize theme
+setTheme(getPreferredTheme());
+themeToggle.addEventListener('click', toggleTheme);
+
+// Listen for system theme changes
+window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+  if (!localStorage.getItem('molt-gallery-theme')) {
+    setTheme(e.matches ? 'light' : 'dark');
+  }
+});
 
 // Fetch and render agents
 async function loadAgents() {
