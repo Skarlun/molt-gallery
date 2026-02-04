@@ -79,7 +79,7 @@ async function loadNeighborhoods() {
 }
 
 // Collect and display popular skills
-let allAgentsCache = [];
+var allAgentsCache = window.allAgentsCache || [];
 function loadSkillsFilter() {
   if (!allAgentsCache.length) return;
   
