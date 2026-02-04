@@ -266,6 +266,8 @@ function setFilter(filter) {
     loadTraders();
   } else if (filter === 'soup') {
     loadSoupSupporters();
+  } else if (filter === 'vouch') {
+    loadVouchView();
   } else {
     loadAgents();
   }
@@ -392,3 +394,8 @@ function escapeHtml(str) {
 // Init
 loadNeighborhoods();
 loadAgents();
+
+// Add vouch filter button
+if (typeof addVouchFilter === 'function') {
+  addVouchFilter();
+}

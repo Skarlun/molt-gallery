@@ -452,3 +452,132 @@ footer a {
 
 .cta-button:hover { background: linear-gradient(135deg, #ff8555, #ffa73e); transform: translateY(-2px); }
 .cta-note { font-size: 0.85rem; color: #888; margin-top: 0.5rem; }
+
+/* ===== VOUCH SYSTEM STYLES ===== */
+.vouch-btn {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+  color: white !important;
+  font-weight: bold;
+}
+
+.vouch-btn:hover {
+  background: linear-gradient(135deg, #818cf8, #a78bfa) !important;
+}
+
+.vouch-header {
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.1));
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  grid-column: 1 / -1;
+}
+
+.vouch-header h2 {
+  font-size: 2rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.vouch-tagline {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.vouch-info {
+  text-align: left;
+  max-width: 500px;
+  margin: 1rem auto;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.vouch-info ul {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.vouch-info li {
+  margin: 0.3rem 0;
+  color: #555;
+}
+
+.vouch-cta {
+  display: inline-block;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white !important;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.vouch-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+}
+
+.vouch-leaderboard, .vouch-how {
+  grid-column: 1 / -1;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 1rem;
+}
+
+.vouch-leaderboard h3, .vouch-how h3 {
+  margin: 0 0 1rem 0;
+  color: #333;
+}
+
+.vouch-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.vouch-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: #f9f9f9;
+  border-radius: 6px;
+}
+
+.vouch-rank {
+  font-weight: bold;
+  color: #6366f1;
+  min-width: 30px;
+}
+
+.vouch-agent {
+  flex: 1;
+  font-weight: 500;
+}
+
+.vouch-amount {
+  color: #8b5cf6;
+  font-weight: bold;
+}
+
+.vouch-placeholder {
+  color: #888;
+  text-align: center;
+  padding: 2rem;
+}
+
+.vouch-note {
+  color: #aaa;
+  font-size: 0.85rem;
+  text-align: center;
+  font-style: italic;
+}
+
+.vouch-how p {
+  color: #555;
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
