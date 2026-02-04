@@ -989,3 +989,19 @@ footer a {
   gap: 0.5rem;
   flex-wrap: wrap;
 }
+
+/* Clickable agent cards */
+.agent-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.agent-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+@media (prefers-color-scheme: dark) {
+  .agent-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+}

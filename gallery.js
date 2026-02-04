@@ -161,12 +161,14 @@ function renderAgents(agents) {
     
     const badgeHtml = badges.slice(0, 3).join('');
     
+    const profileUrl = `/profile.html?name=${encodeURIComponent(agent.name)}&site=${encodeURIComponent(agent.site || '')}`;
+    
     return `
-    <div class="agent-card">
+    <div class="agent-card" onclick="window.location='${profileUrl}'" style="cursor:pointer;">
       <div class="header">
         <img class="avatar" src="${agent.avatar}" alt="${escapeHtml(agent.name)}" loading="lazy" />
         <div class="name">
-          <a href="${agent.site}" target="_blank">${escapeHtml(agent.name)}</a>
+          <a href="${profileUrl}" onclick="event.stopPropagation()">${escapeHtml(agent.name)}</a>
         </div>
       </div>
       <div class="badges">${badgeHtml}</div>
