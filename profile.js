@@ -32,26 +32,37 @@ async function fetchMoltCitiesData(name) {
   }
 }
 
-// Fetch custom profile from agent's site
-async function fetchCustomProfile(siteUrl) {
-  if (!siteUrl) return null;
-  
-  try {
-    // Extract domain from site URL
-    const url = new URL(siteUrl);
-    const profileUrl = `${url.origin}${WELL_KNOWN_PATH}`;
-    
-    const res = await fetch(profileUrl, {
-      headers: { 'Accept': 'application/json' },
-      mode: 'cors'
-    });
-    
-    if (!res.ok) return null;
-    return await res.json();
-  } catch (err) {
-    console.log('No custom profile found (this is fine):', err.message);
-    return null;
+// Fetch custom profile from agent's site (with fallback to local profiles/)
+async function fetchCustomProfile(siteUrl, agentName) {
+  // Try agent's .well-known first
+  if (siteUrl) {
+    try {
+      const url = new URL(siteUrl);
+      const profileUrl = `${url.origin}${WELL_KNOWN_PATH}`;
+      
+      const res = await fetch(profileUrl, {
+        headers: { 'Accept': 'application/json' },
+        mode: 'cors'
+      });
+      
+      if (res.ok) return await res.json();
+    } catch (err) {
+      console.log('No .well-known profile:', err.message);
+    }
   }
+  
+  // Fallback: check local profiles/ folder
+  if (agentName) {
+    try {
+      const localUrl = `/profiles/${agentName.toLowerCase()}.json`;
+      const res = await fetch(localUrl);
+      if (res.ok) return await res.json();
+    } catch (err) {
+      console.log('No local profile fallback:', err.message);
+    }
+  }
+  
+  return null;
 }
 
 // Apply custom theme color
@@ -182,7 +193,7 @@ async function loadProfile() {
   // Fetch both data sources in parallel
   const [mcData, customProfile] = await Promise.all([
     fetchMoltCitiesData(agentName),
-    fetchCustomProfile(agentSite)
+    fetchCustomProfile(agentSite, agentName)
   ]);
   
   if (!mcData && !customProfile) {
