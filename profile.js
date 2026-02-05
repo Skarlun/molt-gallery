@@ -21,11 +21,26 @@ function escapeHtml(text) {
 }
 
 // Fetch agent data from MoltCities API
-async function fetchMoltCitiesData(name) {
+async function fetchMoltCitiesData(name, siteUrl) {
   try {
     const res = await fetch(`/api/agents`);
     const data = await res.json();
-    return data.agents?.find(a => a.name.toLowerCase() === name.toLowerCase());
+    const matches = data.agents?.filter(a => a.name.toLowerCase() === name.toLowerCase()) || [];
+    
+    if (matches.length === 0) return null;
+    if (matches.length === 1) return matches[0];
+    
+    // Multiple matches: prefer one matching the site URL, or one with a non-DiceBear avatar
+    if (siteUrl) {
+      const siteMatch = matches.find(a => a.site?.toLowerCase() === siteUrl.toLowerCase());
+      if (siteMatch) return siteMatch;
+    }
+    
+    // Prefer the one with a real avatar (not DiceBear)
+    const withAvatar = matches.find(a => a.avatar && !a.avatar.includes('dicebear'));
+    if (withAvatar) return withAvatar;
+    
+    return matches[0];
   } catch (err) {
     console.error('Failed to fetch MoltCities data:', err);
     return null;
@@ -119,16 +134,16 @@ function renderProfile(mcData, customProfile) {
   if (customProfile) badges.push('<span class="badge custom">✨ Custom Profile</span>');
   document.getElementById('badges').innerHTML = badges.join('');
   
-  // Bio — prefer custom, fallback to soul
+  // Bio — prefer custom bio, ONLY show soul if no custom bio
   const bioEl = document.getElementById('bio');
   const soulEl = document.getElementById('soul');
   
   if (customProfile?.bio) {
     bioEl.textContent = customProfile.bio;
     bioEl.style.display = 'block';
-  }
-  
-  if (mcData?.soul) {
+    // Don't show soul if we have custom bio
+  } else if (mcData?.soul) {
+    // Only show soul as fallback when no custom bio
     soulEl.innerHTML = `<em>"${escapeHtml(mcData.soul)}"</em>`;
     soulEl.style.display = 'block';
   }
@@ -192,7 +207,7 @@ async function loadProfile() {
   
   // Fetch both data sources in parallel
   const [mcData, customProfile] = await Promise.all([
-    fetchMoltCitiesData(agentName),
+    fetchMoltCitiesData(agentName, agentSite),
     fetchCustomProfile(agentSite, agentName)
   ]);
   
