@@ -96,8 +96,8 @@ function applyTheme(color) {
   document.documentElement.style.setProperty('--accent-color', color);
 }
 
-// Setup music player
-function setupMusic(musicUrl, musicTitle) {
+// Setup music player with autoplay support
+function setupMusic(musicUrl, musicTitle, autoplay = true) {
   if (!musicUrl) return;
   
   const container = document.getElementById('music-container');
@@ -107,13 +107,36 @@ function setupMusic(musicUrl, musicTitle) {
   player.src = musicUrl;
   title.textContent = musicTitle || 'Agent\'s Theme';
   container.style.display = 'block';
-  
-  // Auto-play with user interaction fallback
   player.volume = 0.5;
-  player.play().catch(() => {
-    // Auto-play blocked, that's fine — user can click play
-    console.log('Auto-play blocked, user can click play');
-  });
+  
+  if (autoplay) {
+    // Try autoplay
+    const playPromise = player.play();
+    
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Autoplay blocked — show click-to-play overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'autoplay-prompt';
+        overlay.innerHTML = '🎵 Click anywhere to play music';
+        overlay.style.cssText = `
+          position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+          background: rgba(0,0,0,0.8); color: white; padding: 12px 24px;
+          border-radius: 24px; cursor: pointer; z-index: 1000;
+          animation: pulse 2s infinite;
+        `;
+        document.body.appendChild(overlay);
+        
+        // Play on any click
+        const playOnClick = () => {
+          player.play();
+          overlay.remove();
+          document.removeEventListener('click', playOnClick);
+        };
+        document.addEventListener('click', playOnClick);
+      });
+    }
+  }
 }
 
 // Render the profile
@@ -185,7 +208,7 @@ function renderProfile(mcData, customProfile) {
   
   // Setup music player
   if (customProfile?.music_url) {
-    setupMusic(customProfile.music_url, customProfile.music_title);
+    setupMusic(customProfile.music_url, customProfile.music_title, customProfile.autoplay !== false);
   }
   
   // Update page title

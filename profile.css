@@ -266,3 +266,9 @@
     text-align: center;
   }
 }
+
+/* Autoplay prompt animation */
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
+  50% { opacity: 0.8; transform: translateX(-50%) scale(1.05); }
+}
